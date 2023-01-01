@@ -50,8 +50,9 @@ impl<'a> Material<'a> {
     }
 
     ///  The optional alpha cutoff value of the material.
-    pub fn alpha_cutoff(&self) -> Option<f32> {
-        self.json.alpha_cutoff.map(|value| value.0)
+    // Why was this an Option<f32>? The default value from the spec is implemented but has not been used
+    pub fn alpha_cutoff(&self) -> f32 {
+        self.json.alpha_cutoff.unwrap_or_default().0
     }
 
     /// The alpha rendering mode of the material.  The material's alpha rendering
