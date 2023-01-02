@@ -718,9 +718,9 @@ impl<'a> Clearcoat<'a> {
     }
 }
 
-/// Parameter values that define the clearcoat material model.
+/// Parameter values that define the sheen material model.
 ///
-/// [`KHR_materials_clearcoat`](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_clearcoat/README.md)
+/// [`KHR_materials_sheen`](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_sheen/README.md)
 #[cfg(feature = "KHR_materials_sheen")]
 #[cfg_attr(docsrs, doc(cfg(feature = "KHR_materials_sheen")))]
 pub struct Sheen<'a> {
@@ -734,19 +734,22 @@ pub struct Sheen<'a> {
 #[cfg(feature = "KHR_materials_sheen")]
 #[cfg_attr(docsrs, doc(cfg(feature = "KHR_materials_sheen")))]
 impl<'a> Sheen<'a> {
-    /// Constructs `Clearcoat`.
+    /// Constructs `Sheen`.
     pub(crate) fn new(document: &'a Document, json: &'a json::extensions::material::Sheen) -> Self {
         Self { document, json }
     }
 
-    /// Returns the clearcoat layer intensity.
+    /// Returns the sheen layer color in linear space.
     ///
-    /// The default value is `0.0`.
+    /// The default value is `[0.0, 0.0, 0.0]`.
     pub fn sheen_color_factor(&self) -> [f32; 3] {
         self.json.sheen_color_factor.0
     }
 
-    /// Returns the clearcoat layer intensity texture.
+    /// Returns the sheen layer color texture.  
+    ///
+    /// The sheen color (RGB).
+    /// The sheen color is in sRGB transfer function
     pub fn sheen_color_texture(&self) -> Option<texture::Info<'a>> {
         self.json.sheen_color_texture.as_ref().map(|json| {
             let texture = self.document.textures().nth(json.index.value()).unwrap();
@@ -754,14 +757,14 @@ impl<'a> Sheen<'a> {
         })
     }
 
-    /// Returns the clearcoat layer roughness.
+    /// Returns the sheen layer roughness.
     ///
     /// The default value is `0.0`.
     pub fn sheen_roughness_factor(&self) -> f32 {
         self.json.sheen_roughness_factor.0
     }
 
-    /// Returns the clearcoat layer roughness texture.
+    /// Returns the sheen layer roughness texture.
     pub fn sheen_roughness_texture(&self) -> Option<texture::Info<'a>> {
         self.json.sheen_roughness_texture.as_ref().map(|json| {
             let texture = self.document.textures().nth(json.index.value()).unwrap();
