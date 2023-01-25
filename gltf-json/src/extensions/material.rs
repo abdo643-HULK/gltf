@@ -2,7 +2,8 @@
 use crate::material::StrengthFactor;
 #[cfg(any(
     feature = "KHR_materials_pbrSpecularGlossiness",
-    feature = "KHR_materials_transmission"
+    feature = "KHR_materials_transmission",
+    feature = "KHR_materials_specular",
 ))]
 use crate::texture;
 #[cfg(any(
