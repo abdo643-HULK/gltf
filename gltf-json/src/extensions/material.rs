@@ -144,11 +144,27 @@ pub struct PbrSpecularGlossiness {
 
 /// Defines the normal texture of a material.
 #[derive(Clone, Debug, Default, Deserialize, Serialize, Validate)]
-pub struct NormalTexture {}
+pub struct NormalTexture {
+    #[cfg(feature = "KHR_texture_transform")]
+    #[serde(
+        default,
+        rename = "KHR_texture_transform",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub texture_transform: Option<super::texture::TextureTransform>,
+}
 
 /// Defines the occlusion texture of a material.
 #[derive(Clone, Debug, Default, Deserialize, Serialize, Validate)]
-pub struct OcclusionTexture {}
+pub struct OcclusionTexture {
+    #[cfg(feature = "KHR_texture_transform")]
+    #[serde(
+        default,
+        rename = "KHR_texture_transform",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub texture_transform: Option<super::texture::TextureTransform>,
+}
 
 /// The diffuse factor of a material.
 #[cfg(feature = "KHR_materials_pbrSpecularGlossiness")]
